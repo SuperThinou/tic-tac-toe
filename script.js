@@ -1,5 +1,5 @@
+// Algo variables
 const board = Array(9).fill(null);
-console.log(board);
 
 const players = [
   { name: "Player 1", symbol: "X" },
@@ -7,27 +7,6 @@ const players = [
 ];
 
 let currentPlayerIndex = 0;
-
-function playMove(index) {
-  if (board[index] !== null) {
-    console.log("Case déjà occupée");
-    return;
-  }
-
-  board[index] = players[currentPlayerIndex].symbol;
-  currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
-  printBoard();
-}
-
-function printBoard() {
-  console.log(`
-   ${board[0] || " "} | ${board[1] || " "} | ${board[2] || " "}
-  ---+---+---
-   ${board[3] || " "} | ${board[4] || " "} | ${board[5] || " "}
-  ---+---+---
-   ${board[6] || " "} | ${board[7] || " "} | ${board[8] || " "}
-  `);
-}
 
 const winCombos = [
   [0, 1, 2],
@@ -39,3 +18,50 @@ const winCombos = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+
+// DOM variables
+const frameContainer = document.querySelector(".frame-container");
+const frames = document.querySelectorAll(".frame");
+const newGameBtn = document.querySelector(".new-game-btn");
+const winningPlayerText = document.querySelector("#winningPlayerText");
+
+// Game Algo
+function playMove(index) {
+  if (board[index] !== null) {
+    console.log("Case déjà occupée");
+    return;
+  }
+
+  board[index] = players[currentPlayerIndex].symbol;
+  currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+  checkWinner();
+}
+
+function checkWinner() {
+  for (const combo of winCombos) {
+    const [a, b, c] = combo;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      winningPlayerText.textContent = "Player " + board[a] + " wins!";
+    } else if (board.every((cell) => cell !== null)) {
+      winningPlayerText.textContent = "It's a tie!";
+    }
+  }
+}
+
+// UI
+frameContainer.addEventListener("click", (e) => {
+  const index = e.target.id;
+
+  if (e.target.textContent === "" && winningPlayerText.textContent === "")
+    e.target.textContent = players[currentPlayerIndex].symbol;
+
+  playMove(index);
+});
+
+newGameBtn.addEventListener("click", () => {
+  frames.forEach((frame) => {
+    frame.textContent = "";
+  });
+  board.fill(null);
+  winningPlayerText.textContent = "";
+});
