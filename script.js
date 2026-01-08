@@ -28,12 +28,7 @@ const winningPlayerText = document.querySelector("#winningPlayerText");
 
 // Game Algo
 function playMove(index) {
-  if (gameOver) return;
-
-  if (board[index] !== null) {
-    console.log("Case déjà occupée");
-    return;
-  }
+  if (board[index] || gameOver) return;
 
   board[index] = players[currentPlayerIndex].symbol;
   currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
