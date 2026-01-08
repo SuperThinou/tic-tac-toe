@@ -7,6 +7,7 @@ const players = [
 ];
 
 let currentPlayerIndex = 0;
+let gameOver = false;
 
 const winCombos = [
   [0, 1, 2],
@@ -27,6 +28,8 @@ const winningPlayerText = document.querySelector("#winningPlayerText");
 
 // Game Algo
 function playMove(index) {
+  if (gameOver) return;
+
   if (board[index] !== null) {
     console.log("Case déjà occupée");
     return;
@@ -42,9 +45,12 @@ function checkWinner() {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
       winningPlayerText.textContent = "Player " + board[a] + " wins!";
-    } else if (board.every((cell) => cell !== null)) {
-      winningPlayerText.textContent = "It's a tie!";
+      gameOver = true;
     }
+  }
+  if (board.every((cell) => cell !== null)) {
+    winningPlayerText.textContent = "It's a tie!";
+    gameOver = true;
   }
 }
 
@@ -52,7 +58,7 @@ function checkWinner() {
 frameContainer.addEventListener("click", (e) => {
   const index = e.target.id;
 
-  if (e.target.textContent === "" && winningPlayerText.textContent === "")
+  if (e.target.textContent === "" && gameOver === false)
     e.target.textContent = players[currentPlayerIndex].symbol;
 
   playMove(index);
@@ -64,4 +70,5 @@ newGameBtn.addEventListener("click", () => {
   });
   board.fill(null);
   winningPlayerText.textContent = "";
+  gameOver = false;
 });
