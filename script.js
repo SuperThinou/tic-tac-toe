@@ -56,7 +56,7 @@ function checkWinner() {
 
 // UI
 frameContainer.addEventListener("click", (e) => {
-  const index = e.target.id;
+  const index = Number(e.target.dataset.index);
 
   if (e.target.textContent === "" && gameOver === false)
     e.target.textContent = players[currentPlayerIndex].symbol;
