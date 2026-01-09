@@ -85,6 +85,38 @@ h1 {
   font-size: 2.5rem;
 }
 
+h2 {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+input {
+  margin-bottom: 5px;
+  padding: 4px 10px;
+  border-radius: 30px;
+  border: none;
+  color: black;
+}
+
+#saveNameBtn {
+  margin: 10px 0;
+  padding: 2px 25px;
+  background-color: green;
+  border-radius: 15px;
+  border: none;
+}
+
 .frame-container {
   height: 500px;
   width: 500px;

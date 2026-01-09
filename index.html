@@ -10,6 +10,15 @@
 
   <body>
     <header><h1>Tic-Tac-Toe</h1></header>
+
+    <h2 id="nameFormTitle">Names (optional)</h2>
+    <form action="" class="hidden">
+      <label for="playerOneName">Player One name (O)</label>
+      <input type="text" name="player-one-name" id="inputPlayer1" />
+      <label for="playerTwoName">Player Two name (X)</label>
+      <input type="text" name="player-two-name" id="inputPlayer2" />
+      <button id="saveNameBtn">Save</button>
+    </form>
     <main>
       <section class="frame-container">
         <div class="frame" data-index="0"></div>
@@ -24,7 +33,7 @@
       </section>
     </main>
     <button class="new-game-btn">Start New Game</button>
-    <h2 id="winningPlayerText"></h2>
+    <h3 id="winningPlayerText"></h3>
     <footer>
       <p>NBX 2025 ©</p>
       <a href="https://github.com/SuperThinou" target="_blank"
