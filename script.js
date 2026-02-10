@@ -37,8 +37,8 @@ function playMove(index) {
   if (board[index] || gameOver) return;
 
   board[index] = players[currentPlayerIndex].symbol;
-  currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
   checkWinner();
+  currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
 }
 
 function checkWinner() {
@@ -46,8 +46,10 @@ function checkWinner() {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
       winningPlayerText.textContent =
-        players[a].name + " (" + board[a] + ") " + " wins!";
+        players[currentPlayerIndex].name + " (" + board[a] + ") " + " wins!";
+
       gameOver = true;
+      return;
     }
   }
   if (board.every((cell) => cell !== null)) {
@@ -81,7 +83,11 @@ saveNameBtn.addEventListener("click", (e) => {
 frameContainer.addEventListener("click", (e) => {
   const index = Number(e.target.dataset.index);
 
-  if (e.target.textContent === "" && gameOver === false)
+  if (
+    e.target.textContent === "" &&
+    gameOver === false &&
+    form.classList.contains("hidden")
+  )
     e.target.textContent = players[currentPlayerIndex].symbol;
 
   playMove(index);
@@ -93,5 +99,6 @@ newGameBtn.addEventListener("click", () => {
   });
   board.fill(null);
   winningPlayerText.textContent = "";
+  currentPlayerIndex = 0;
   gameOver = false;
 });
